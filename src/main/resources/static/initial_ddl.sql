@@ -1,117 +1,225 @@
-CREATE TABLE "movie" (
-  "id" integer PRIMARY KEY,
-  "title" varchar,
-  "synopsis" text,
-  "genre" varchar[],
-  "start_date" timestamptz,
-  "end_date" timestamptz
+-- DROP SCHEMA public;
+
+CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+
+-- DROP SEQUENCE public.order_seat_id_seq;
+
+CREATE SEQUENCE public.order_seat_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;-- public.t_city definition
+
+-- Drop table
+
+-- DROP TABLE public.t_city;
+
+CREATE TABLE public.t_city (
+	id int8 NOT NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT city_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "city" (
-  "id" integer PRIMARY KEY,
-  "name" varchar
+
+-- public.t_movie definition
+
+-- Drop table
+
+-- DROP TABLE public.t_movie;
+
+CREATE TABLE public.t_movie (
+	id int8 NOT NULL,
+	title varchar(255) NULL,
+	synopsis varchar(255) NULL,
+	genre _varchar NULL,
+	start_date timestamptz NULL,
+	end_date timestamptz NULL,
+	CONSTRAINT movie_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "cinema" (
-  "id" integer PRIMARY KEY,
-  "city_id" integer,
-  "name" varchar
+
+-- public.t_seat_element definition
+
+-- Drop table
+
+-- DROP TABLE public.t_seat_element;
+
+CREATE TABLE public.t_seat_element (
+	id int8 NOT NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT seat_element_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "studio" (
-  "id" integer PRIMARY KEY,
-  "cinema_id" integer,
-  "type_id" integer,
-  "name" varchar
+
+-- public.t_seat_type definition
+
+-- Drop table
+
+-- DROP TABLE public.t_seat_type;
+
+CREATE TABLE public.t_seat_type (
+	id int8 NOT NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT seat_type_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "studio_type" (
-  "id" integer PRIMARY KEY,
-  "name" varchar,
-  "row_seats" integer,
-  "col_seats" integer
+
+-- public.t_studio_type definition
+
+-- Drop table
+
+-- DROP TABLE public.t_studio_type;
+
+CREATE TABLE public.t_studio_type (
+	id int8 NOT NULL,
+	"name" varchar(255) NULL,
+	row_seats int4 NULL,
+	col_seats int4 NULL,
+	CONSTRAINT studio_type_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "seat_type" (
-  "id" integer PRIMARY KEY,
-  "name" varchar
+
+-- public.t_user definition
+
+-- Drop table
+
+-- DROP TABLE public.t_user;
+
+CREATE TABLE public.t_user (
+	id int8 NOT NULL,
+	"name" varchar(255) NULL,
+	email varchar(255) NULL,
+	mobile_no varchar(255) NULL,
+	"password" varchar(255) NULL,
+	"type" varchar(255) NULL,
+	CONSTRAINT user_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE "seat_element" (
-  "id" integer PRIMARY KEY,
-  "name" varchar
+
+-- public.t_cinema definition
+
+-- Drop table
+
+-- DROP TABLE public.t_cinema;
+
+CREATE TABLE public.t_cinema (
+	id int8 NOT NULL,
+	city_id int8 NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT cinema_pkey PRIMARY KEY (id),
+	CONSTRAINT cinema_city_id_fkey FOREIGN KEY (city_id) REFERENCES public.t_city(id)
 );
 
-CREATE TABLE "seat_studio" (
-  "id" integer PRIMARY KEY,
-  "seat_type_id" integer,
-  "seat_element_id" integer,
-  "studio_id" integer,
-  "row" integer,
-  "col" integer,
-  "price" decimal,
-  "is_available" boolean,
-  "code" varchar
+
+-- public.t_studio definition
+
+-- Drop table
+
+-- DROP TABLE public.t_studio;
+
+CREATE TABLE public.t_studio (
+	id int8 NOT NULL,
+	cinema_id int8 NULL,
+	type_id int8 NULL,
+	"name" varchar(255) NULL,
+	col_seats int4 NULL,
+	row_seats int4 NULL,
+	CONSTRAINT studio_pkey PRIMARY KEY (id),
+	CONSTRAINT studio_cinema_id_fkey FOREIGN KEY (cinema_id) REFERENCES public.t_cinema(id),
+	CONSTRAINT studio_type_id_fkey FOREIGN KEY (type_id) REFERENCES public.t_studio_type(id)
 );
 
-CREATE TABLE "user" (
-  "id" integer PRIMARY KEY,
-  "name" varchar,
-  "email" varchar,
-  "mobile_no" varchar,
-  "password" varchar,
-  "type" varchar
+
+-- public.t_movie_studio_schedule definition
+
+-- Drop table
+
+-- DROP TABLE public.t_movie_studio_schedule;
+
+CREATE TABLE public.t_movie_studio_schedule (
+	id int8 NOT NULL,
+	studio_id int8 NULL,
+	movie_id int8 NULL,
+	"day" varchar(255) NULL,
+	start_time timestamptz NULL,
+	end_time timestamptz NULL,
+	price numeric NULL,
+	CONSTRAINT movie_studio_schedule_pkey PRIMARY KEY (id),
+	CONSTRAINT movie_studio_schedule_movie_id_fkey FOREIGN KEY (movie_id) REFERENCES public.t_movie(id),
+	CONSTRAINT movie_studio_schedule_studio_id_fkey FOREIGN KEY (studio_id) REFERENCES public.t_studio(id)
 );
 
-CREATE TABLE "movie_studio_schedule" (
-  "id" integer PRIMARY KEY,
-  "studio_id" integer,
-  "movie_id" integer,
-  "day" varchar,
-  "start_time" timestamptz,
-  "end_time" timestamptz,
-  "price" decimal
+
+-- public.t_seat_studio definition
+
+-- Drop table
+
+-- DROP TABLE public.t_seat_studio;
+
+CREATE TABLE public.t_seat_studio (
+	id int8 NOT NULL,
+	seat_type_id int8 NULL,
+	seat_element_id int8 NULL,
+	studio_id int8 NULL,
+	"row" int4 NULL,
+	col int4 NULL,
+	price int8 NULL,
+	is_available bool NULL,
+	code varchar(255) NULL,
+	CONSTRAINT seat_studio_pkey PRIMARY KEY (id),
+	CONSTRAINT seat_studio_seat_element_id_fkey FOREIGN KEY (seat_element_id) REFERENCES public.t_seat_element(id),
+	CONSTRAINT seat_studio_seat_type_id_fkey FOREIGN KEY (seat_type_id) REFERENCES public.t_seat_type(id),
+	CONSTRAINT seat_studio_studio_id_fkey FOREIGN KEY (studio_id) REFERENCES public.t_studio(id)
 );
 
-CREATE TABLE "order" (
-  "id" integer PRIMARY KEY,
-  "user_id" integer,
-  "schedule_id" integer,
-  "status" varchar,
-  "order_timestamp" timestamptz,
-  "payment_timestamp" timestamptz
+
+-- public.t_booking definition
+
+-- Drop table
+
+-- DROP TABLE public.t_booking;
+
+CREATE TABLE public.t_booking (
+	id varchar NOT NULL,
+	user_id int4 NULL,
+	schedule_id int4 NULL,
+	status varchar NULL,
+	payment_timestamp timestamptz NULL,
+	CONSTRAINT order_pkey PRIMARY KEY (id),
+	CONSTRAINT order_schedule_id_fkey FOREIGN KEY (schedule_id) REFERENCES public.t_movie_studio_schedule(id),
+	CONSTRAINT order_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.t_user(id)
 );
 
-CREATE TABLE "seat_order" (
-  "id" integer PRIMARY KEY,
-  "order_id" integer,
-  "seat_id" integer
+
+-- public.t_order_seat definition
+
+-- Drop table
+
+-- DROP TABLE public.t_order_seat;
+
+CREATE TABLE public.t_order_seat (
+	id int8 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	order_id varchar(255) NULL,
+	seat_id int8 NULL,
+	CONSTRAINT order_seat_pkey PRIMARY KEY (id),
+	CONSTRAINT fk5l6jead8y0obt5hyuky8rfv98 FOREIGN KEY (seat_id) REFERENCES public.t_seat_studio(id),
+	CONSTRAINT fkt18ikjv35jy9ud82698eltbtd FOREIGN KEY (order_id) REFERENCES public.t_booking(id)
 );
 
-COMMENT ON COLUMN "seat_element"."name" IS 'DOOR / SEAT / STAIRS';
 
-COMMENT ON COLUMN "user"."type" IS 'ADMIN / USER';
+-- public.t_seat_order definition
 
-ALTER TABLE "cinema" ADD FOREIGN KEY ("city_id") REFERENCES "city" ("id");
+-- Drop table
 
-ALTER TABLE "studio" ADD FOREIGN KEY ("cinema_id") REFERENCES "cinema" ("id");
+-- DROP TABLE public.t_seat_order;
 
-ALTER TABLE "studio" ADD FOREIGN KEY ("type_id") REFERENCES "studio_type" ("id");
-
-ALTER TABLE "seat_studio" ADD FOREIGN KEY ("seat_type_id") REFERENCES "seat_type" ("id");
-
-ALTER TABLE "seat_studio" ADD FOREIGN KEY ("seat_element_id") REFERENCES "seat_element" ("id");
-
-ALTER TABLE "seat_studio" ADD FOREIGN KEY ("studio_id") REFERENCES "studio" ("id");
-
-ALTER TABLE "movie_studio_schedule" ADD FOREIGN KEY ("studio_id") REFERENCES "studio" ("id");
-
-ALTER TABLE "movie_studio_schedule" ADD FOREIGN KEY ("movie_id") REFERENCES "movie" ("id");
-
-ALTER TABLE "order" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
-
-ALTER TABLE "seat_order" ADD FOREIGN KEY ("order_id") REFERENCES "order" ("id");
-
-ALTER TABLE "seat_order" ADD FOREIGN KEY ("seat_id") REFERENCES "seat_studio" ("id");
-
-ALTER TABLE "order" ADD FOREIGN KEY ("schedule_id") REFERENCES "movie_studio_schedule" ("id");
+CREATE TABLE public.t_seat_order (
+	id int4 NOT NULL,
+	order_id varchar NULL,
+	seat_id int4 NULL,
+	CONSTRAINT seat_order_pkey PRIMARY KEY (id),
+	CONSTRAINT seat_order_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.t_booking(id),
+	CONSTRAINT seat_order_seat_id_fkey FOREIGN KEY (seat_id) REFERENCES public.t_seat_studio(id)
+);
