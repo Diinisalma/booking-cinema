@@ -1,22 +1,19 @@
-package com.github.diinisalma.bioskop.domain;
+package com.github.diinisalma.bioskop.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
-@Table(name = "t_cinema")
+@Table(name = "t_seat_element")
 @Data
 @AllArgsConstructor
-public class CinemaEntity {
+public class SeatElement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private CityEntity cityEntity;
 }

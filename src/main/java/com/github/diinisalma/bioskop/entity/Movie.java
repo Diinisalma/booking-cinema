@@ -1,27 +1,25 @@
-package com.github.diinisalma.bioskop.domain;
+package com.github.diinisalma.bioskop.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "t_movie")
 @Data
 @AllArgsConstructor
-public class MovieEntity {
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", nullable = false)
     private String title;
+
+    // tambah max character
+    @Column(length = 200)
     private String synopsis;
     private String[] genre;
-
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private Long duration;
 }

@@ -1,5 +1,6 @@
-package com.github.diinisalma.bioskop.domain;
+package com.github.diinisalma.bioskop.entity;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -18,37 +19,39 @@ import lombok.Data;
 @Table(name = "t_seat_studio")
 @Data
 @AllArgsConstructor
-public class SeatStudioEntity {
+public class SeatStudio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "studio_id")
-    private StudioEntity studioEntity;
+    @JoinColumn(name = "studio_id", nullable = false)
+    private Studio studio;
 
     @ManyToOne
     @JoinColumn(name = "seat_type_id")
-    private SeatTypeEntity seatTypeEntity;
+    private SeatType seatType;
 
     @ManyToOne
-    @JoinColumn(name = "seat_element_id")
-    private SeatElementEntity seatElementEntity;
+    @JoinColumn(name = "seat_element_id", nullable = false)
+    private SeatElement seatElement;
 
-    @Column(name = "row")
+    @Column(name = "row", nullable = false)
     private Integer rowIndex;
 
-    @Column(name = "col")
+    @Column(name = "col", nullable = false)
     private Integer colIndex;
 
-    private Long price;
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 
-    @Column(name = "is_available")
+    @Column(name = "is_available", nullable = false)
     private Boolean isAvailable;
 
+    @Column(name = "code", nullable = false)
     private String code;
 
     @ManyToMany(mappedBy = "seats")
-    private Set<BookingEntity> bookings;
+    private Set<Booking> bookings;
 
 }

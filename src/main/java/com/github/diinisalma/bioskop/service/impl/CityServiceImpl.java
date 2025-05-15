@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.github.diinisalma.bioskop.domain.CityEntity;
-import com.github.diinisalma.bioskop.domain.CityRepository;
+import com.github.diinisalma.bioskop.entity.City;
+import com.github.diinisalma.bioskop.repository.CityRepository;
 import com.github.diinisalma.bioskop.dto.CityPayloadDTO;
 import com.github.diinisalma.bioskop.dto.CityResponseDTO;
 import com.github.diinisalma.bioskop.dto.ResultPageResponseDTO;
@@ -24,14 +24,14 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public void createCity(CityPayloadDTO dto) {
-        CityEntity entity = new CityEntity();
+        City entity = new City();
         entity.setName(dto.name());
         cityRepository.save(entity);
     }
 
     @Override
     public void updateCity(Long id, CityPayloadDTO dto) {
-        CityEntity entity = new CityEntity(id, dto.name());
+        City entity = new City(id, dto.name());
         cityRepository.save(entity);
     }
 
@@ -43,7 +43,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public ResultPageResponseDTO<CityResponseDTO> getAllCities(Pageable pageable, String cityName) {
         cityName = StringUtils.hasText(cityName) ? "%" + cityName + "%" : "%";
-        Page<CityEntity> cities = cityRepository.findByNameLikeIgnoreCase(cityName, pageable);
+        Page<City> cities = cityRepository.findByNameLikeIgnoreCase(cityName, pageable);
         List<CityResponseDTO> result = cities.stream().map(city -> new CityResponseDTO(city.getId(), city.getName()))
                 .toList();
         return new ResultPageResponseDTO<>(result, cities.getTotalPages(), cities.getTotalElements());

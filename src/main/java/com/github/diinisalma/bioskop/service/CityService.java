@@ -1,6 +1,5 @@
 package com.github.diinisalma.bioskop.service;
 
-import com.github.diinisalma.bioskop.domain.CityEntity;
 import com.github.diinisalma.bioskop.dto.CityPayloadDTO;
 import com.github.diinisalma.bioskop.dto.CityResponseDTO;
 import com.github.diinisalma.bioskop.dto.ResultPageResponseDTO;
