@@ -1,6 +1,11 @@
 package com.github.diinisalma.bioskop.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,5 +26,7 @@ public class Movie {
     @Column(length = 200)
     private String synopsis;
     private String[] genre;
-    private Long duration;
+
+    @Column(nullable = false, columnDefinition = "smallint")
+    private Integer duration;
 }
