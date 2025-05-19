@@ -28,5 +28,5 @@ public class Studio {
 
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
-    private Cinema cinemaEntity;
+    private Cinema cinema;
 }
