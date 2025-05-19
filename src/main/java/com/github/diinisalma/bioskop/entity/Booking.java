@@ -2,10 +2,18 @@ package com.github.diinisalma.bioskop.entity;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Set;
 
 import com.github.diinisalma.bioskop.domain.OrderStatus;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,15 +45,11 @@ public class Booking {
     @Column(name = "payment_timestamp")
     private LocalDateTime paymentTimestamp;
 
-    @ManyToMany
-    @JoinTable(name = "t_order_seat", joinColumns = @JoinColumn(name = "booking_id"), inverseJoinColumns = @JoinColumn(name = "seat_id"))
-    private Set<SeatStudio> seats;
-
     @PrePersist
     public void generateId() {
         LocalDateTime now = LocalDateTime.now();
         this.orderTimestamp = now;
-        this.id = now.toEpochSecond(ZoneOffset.UTC) + "_" + this.movieStudioSchedule.getId() + "_"
+        this.id = now.toInstant(ZoneOffset.UTC).toEpochMilli() + "_" + this.movieStudioSchedule.getId() + "_"
                 + this.user.getId();
     }
 }
