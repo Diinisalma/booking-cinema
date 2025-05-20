@@ -45,6 +45,9 @@ public class Booking {
     @Column(name = "payment_timestamp")
     private LocalDateTime paymentTimestamp;
 
+    @Column(name = "cancel_timestamp")
+    private LocalDateTime cancelTimestamp;
+
     @PrePersist
     public void generateId() {
         LocalDateTime now = LocalDateTime.now();

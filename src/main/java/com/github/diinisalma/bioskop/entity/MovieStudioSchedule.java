@@ -27,9 +27,6 @@ public class MovieStudioSchedule {
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime;
-
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 }

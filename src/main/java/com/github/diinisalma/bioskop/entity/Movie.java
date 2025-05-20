@@ -8,11 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "t_movie")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Movie {
 
     @Id
@@ -29,4 +31,7 @@ public class Movie {
 
     @Column(nullable = false, columnDefinition = "smallint")
     private Integer duration;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 }
