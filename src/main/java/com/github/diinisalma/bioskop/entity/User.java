@@ -1,6 +1,7 @@
 package com.github.diinisalma.bioskop.entity;
 
 import com.github.diinisalma.bioskop.domain.UserType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +23,7 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
@@ -32,6 +33,6 @@ public class User {
     @Column(name = "type", nullable = false)
     private UserType type;
 
-    @Column(name = "mobile_no", nullable = false)
+    @Column(name = "mobile_no", nullable = false, unique = true)
     private String mobileNo;
 }

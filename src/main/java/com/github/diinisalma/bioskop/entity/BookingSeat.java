@@ -1,5 +1,7 @@
 package com.github.diinisalma.bioskop.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,4 +28,6 @@ public class BookingSeat {
     @ManyToOne
     @JoinColumn(name = "seat_id", nullable = false)
     private SeatStudio seat;
+
+    private BigDecimal price;
 }
