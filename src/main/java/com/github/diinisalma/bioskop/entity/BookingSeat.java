@@ -11,11 +11,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "t_booking_seat")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookingSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
