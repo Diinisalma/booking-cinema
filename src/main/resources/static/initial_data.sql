@@ -211,12 +211,11 @@ DROP TABLE cinema_ids;
 DROP TABLE studio_sequence;
 
 -- Insert Movies
-INSERT INTO public.t_movie (title, synopsis, genre, duration) VALUES
-('The Last Adventure', 'An epic journey through uncharted territories', ARRAY['Action', 'Adventure'], 150),
-('Love in Paris', 'A romantic story set in the city of love', ARRAY['Romance', 'Drama'], 120),
-('Mystery of the Deep', 'A thrilling underwater exploration', ARRAY['Thriller', 'Mystery'], 135),
-('Comedy Night', 'A night full of laughter and joy', ARRAY['Comedy'], 110),
-('Future World', 'A sci-fi adventure in the year 2150', ARRAY['Sci-Fi', 'Action'], 160);
+INSERT INTO public.t_movie (id, title, synopsis, genre, duration, portrait_image_url, landscape_image_url) VALUES(1, 'The Last Adventure', 'An epic journey through uncharted territories', '{Action,Adventure}', 150, 'https://upload.wikimedia.org/wikipedia/en/1/16/Les_Aventuriers.png', 'https://upload.wikimedia.org/wikipedia/en/1/16/Les_Aventuriers.png');
+INSERT INTO public.t_movie (id, title, synopsis, genre, duration, portrait_image_url, landscape_image_url) VALUES(2, 'Love in Paris', 'A romantic story set in the city of love', '{Romance,Drama}', 120, 'https://m.media-amazon.com/images/S/pv-target-images/e14ee7f0ea16d4122d93b711981dfc2535e0a4d9e256c71b078f11c7772dc343.jpg', 'https://m.media-amazon.com/images/S/pv-target-images/e14ee7f0ea16d4122d93b711981dfc2535e0a4d9e256c71b078f11c7772dc343.jpg');
+INSERT INTO public.t_movie (id, title, synopsis, genre, duration, portrait_image_url, landscape_image_url) VALUES(3, 'Mystery of the Deep', 'A thrilling underwater exploration', '{Thriller,Mystery}', 135, 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p18031775_b_v13_ao.jpg', 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p18031775_b_v13_ao.jpg');
+INSERT INTO public.t_movie (id, title, synopsis, genre, duration, portrait_image_url, landscape_image_url) VALUES(4, 'Comedy Night', 'A night full of laughter and joy', '{Comedy}', 110, 'https://www.visitsedaliamo.com/wp-content/uploads/2024/05/Square-ComedyNight-small.jpg', 'https://www.visitsedaliamo.com/wp-content/uploads/2024/05/Square-ComedyNight-small.jpg');
+INSERT INTO public.t_movie (id, title, synopsis, genre, duration, portrait_image_url, landscape_image_url) VALUES(5, 'Future World', 'A sci-fi adventure in the year 2150', '{Sci-Fi,Action}', 160, 'https://pbs.twimg.com/media/DiYTizAU0AAjMbv.jpg', 'https://pbs.twimg.com/media/DiYTizAU0AAjMbv.jpg');
 
 -- Create temporary table for studio IDs
 CREATE TEMPORARY TABLE studio_ids AS
