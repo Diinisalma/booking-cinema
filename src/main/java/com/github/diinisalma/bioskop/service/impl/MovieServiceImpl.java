@@ -1,7 +1,6 @@
 package com.github.diinisalma.bioskop.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class MovieServiceImpl implements MovieService {
                 .<MovieListResponseDTO>map(movie -> new MovieListResponseDTO(
                         movie.getId(),
                         movie.getTitle(),
-                        movie.getImageUrl()))
+                        movie.getPortraitImageUrl()))
                 .toList();
     }
 
@@ -38,7 +37,7 @@ public class MovieServiceImpl implements MovieService {
         return new MovieDetailResponseDTO(
                 movie.getId(),
                 movie.getTitle(),
-                movie.getImageUrl(),
+                movie.getLandscapeImageUrl(),
                 movie.getSynopsis(),
                 movie.getGenre(),
                 movie.getDuration());
@@ -51,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
                 .<MovieListResponseDTO>map(movie -> new MovieListResponseDTO(
                         movie.getId(),
                         movie.getTitle(),
-                        movie.getImageUrl()))
+                        movie.getPortraitImageUrl()))
                 .toList();
     }
 }
