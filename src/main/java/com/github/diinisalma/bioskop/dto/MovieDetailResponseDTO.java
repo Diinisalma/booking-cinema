@@ -7,5 +7,4 @@ public record MovieDetailResponseDTO(
         String synopsis,
         String[] genre,
         Integer duration) {
-
 }
