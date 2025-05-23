@@ -1,5 +1,6 @@
 package com.github.diinisalma.bioskop.web;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.diinisalma.bioskop.dto.MovieDetailResponseDTO;
 import com.github.diinisalma.bioskop.dto.MovieListResponseDTO;
+import com.github.diinisalma.bioskop.dto.MovieStudioScheduleResponseDTO;
 import com.github.diinisalma.bioskop.service.MovieService;
+import com.github.diinisalma.bioskop.service.MovieStudioScheduleService;
 
 @Controller
 @RequestMapping("/movies")
@@ -30,6 +33,11 @@ public class MovieController {
     @GetMapping("/{id}")
     public ResponseEntity<MovieDetailResponseDTO> getMovieById(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.findById(id));
+    }
+
+    @GetMapping("/city/{cityId}")
+    public ResponseEntity<List<MovieListResponseDTO>> getMoviesByCityId(@PathVariable Long cityId) {
+        return ResponseEntity.ok(movieService.findByCityId(cityId));
     }
 
 }

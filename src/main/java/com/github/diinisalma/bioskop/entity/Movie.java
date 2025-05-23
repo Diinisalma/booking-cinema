@@ -1,10 +1,13 @@
 package com.github.diinisalma.bioskop.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +35,14 @@ public class Movie {
     @Column(nullable = false, columnDefinition = "smallint")
     private Integer duration;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "portrait_image_url")
+    private String portraitImageUrl;
+
+    @Column(name = "landscape_image_url")
+    private String landscapeImageUrl;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieStudioSchedule> movieStudioSchedules;
+
+
 }

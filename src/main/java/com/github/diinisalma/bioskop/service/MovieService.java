@@ -9,4 +9,6 @@ public interface MovieService {
     List<MovieListResponseDTO> findAll();
 
     MovieDetailResponseDTO findById(Long id);
+
+    List<MovieListResponseDTO> findByCityId(Long cityId);
 }

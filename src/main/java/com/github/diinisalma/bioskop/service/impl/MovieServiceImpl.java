@@ -43,4 +43,15 @@ public class MovieServiceImpl implements MovieService {
                 movie.getGenre(),
                 movie.getDuration());
     }
+
+    @Override
+    public List<MovieListResponseDTO> findByCityId(Long cityId) {
+        List<Movie> movies = movieRepository.findByCityId(cityId);
+        return movies.stream()
+                .<MovieListResponseDTO>map(movie -> new MovieListResponseDTO(
+                        movie.getId(),
+                        movie.getTitle(),
+                        movie.getImageUrl()))
+                .toList();
+    }
 }
