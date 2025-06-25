@@ -1,26 +1,29 @@
 package com.github.diinisalma.bioskop.entity;
 
-import java.util.Set;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
+import java.util.Set;
+
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "t_city")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class City {
+@SQLDelete(sql = "UPDATE t_city SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
+public class City extends BaseEntity {
+
+    // Gunakan GenerationType.SEQUENCE jika menggunakan Batch insert
+    // agar proses insert-nya menggunakan 1 command SQL
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "name", nullable = false)
