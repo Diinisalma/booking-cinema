@@ -15,7 +15,7 @@ public class SecureIdBaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "secure_id", unique = true, nullable = false, columnDefinition = "varchar default gen_random_uuid()")
+    @Column(name = "secure_id", unique = true, nullable = false)
     private String secureId = UUID.randomUUID().toString();
 
     @Column(name = "deleted", columnDefinition = "boolean default false")

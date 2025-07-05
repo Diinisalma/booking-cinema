@@ -1,5 +1,6 @@
 package com.github.diinisalma.bioskop.service;
 
+import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public interface CityService {
     void createCity(List<CityPayloadDTO> dtos);
 
-    void updateCity(Long id, CityPayloadDTO dto);
+    void updateCity(Long id, @Valid CityPayloadDTO dto);
 
     void deleteCity(Long id) throws BadRequestException;
 

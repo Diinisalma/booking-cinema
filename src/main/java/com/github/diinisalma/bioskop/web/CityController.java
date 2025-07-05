@@ -1,5 +1,6 @@
 package com.github.diinisalma.bioskop.web;
 
+import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +49,7 @@ public class CityController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateCity(@PathVariable Long id, @RequestBody CityPayloadDTO dto) {
+    public ResponseEntity<Void> updateCity(@Valid @RequestBody CityPayloadDTO dto, @PathVariable Long id) {
         cityService.updateCity(id, dto);
         return ResponseEntity.ok().build();
     }

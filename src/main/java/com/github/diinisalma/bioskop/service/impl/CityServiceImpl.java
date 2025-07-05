@@ -1,19 +1,20 @@
 package com.github.diinisalma.bioskop.service.impl;
 
-import java.util.List;
-
+import com.github.diinisalma.bioskop.dto.CityPayloadDTO;
+import com.github.diinisalma.bioskop.dto.CityResponseDTO;
+import com.github.diinisalma.bioskop.dto.ResultPageResponseDTO;
+import com.github.diinisalma.bioskop.entity.City;
+import com.github.diinisalma.bioskop.exception.ResourceNotFoundException;
+import com.github.diinisalma.bioskop.repository.CityRepository;
+import com.github.diinisalma.bioskop.service.CityService;
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.github.diinisalma.bioskop.dto.CityPayloadDTO;
-import com.github.diinisalma.bioskop.dto.CityResponseDTO;
-import com.github.diinisalma.bioskop.dto.ResultPageResponseDTO;
-import com.github.diinisalma.bioskop.entity.City;
-import com.github.diinisalma.bioskop.repository.CityRepository;
-import com.github.diinisalma.bioskop.service.CityService;
+import java.util.List;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -35,7 +36,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public void updateCity(Long id, CityPayloadDTO dto) {
-        City entity = new City();
+        City entity = cityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("City not found with id: " + id));
         entity.setId(id);
         entity.setName(dto.name());
         cityRepository.save(entity);
